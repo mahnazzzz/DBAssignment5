@@ -27,7 +27,7 @@ mysql> load xml local infile '<DATANAME>.xml' into table <TABELNAME> rows identi
 ```
 > Copy sql statement from [here](https://gist.github.com/emanoelbarreiros/c164a60e98a7482cde22) into mysql workbench and run the statment. (You have to delete some of the wrong statement from line 95-125)
 
-`Exercise 1
+#### `Exercise 1
 Write a stored procedure denormalizeComments(postID) that moves all comments for a post (the parameter) into a json array on the post.`
 
 Exercise 2
