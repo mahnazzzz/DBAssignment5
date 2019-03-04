@@ -22,7 +22,7 @@ root@e828ce7aa1e9:/# mysql -u <username> -p --local-infile stackoverflow
 ```
 #### Load the data into table
 ```sh
- mysql>  set global local_infile = 1;
+mysql>  set global local_infile = 1;
 mysql> load xml local infile '<DATANAME>.xml' into table <TABELNAME> rows identified by '<row>';
 ```
 > Copy sql statement from [here](https://gist.github.com/emanoelbarreiros/c164a60e98a7482cde22) into mysql workbench and run the statment. (You have to delete some of the wrong statement from line 95-125)
@@ -36,6 +36,15 @@ ALTER TABLE posts
 ADD column CommentsToJsonArr json;
 ```
 ```sh
+DELIMITER $$
+CREATE PROCEDURE `denormalizeComments` (in postID int(11))
+BEGIN
+UPDATE posts SET CommentsToJsonArr = (
+	SELECT JSON_ARRAYAGG(jsonComments.jsonObj) from (
+		SELECT JSON_OBJECT('Id', Id,'PostId', PostId,'Score', Score,'Text', Text,'CreationDate', CreationDate,'UserId', UserId) AS jsonObj
+		FROM comments WHERE PostId = postID) AS jsonComments) WHERE ID = postID;
+END $$
+DELIMITER ;
 ```
 
 ### Exercise 2
