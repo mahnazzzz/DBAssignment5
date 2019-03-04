@@ -65,6 +65,19 @@ DELIMITER ;
 ### Exercise 3
 Rather than using a trigger, create a stored procedure to add a comment to a post - adding it both to the comment table and the json array
 
+```sh
+DELIMITER $$ 
+CREATE PROCEDURE `addComment` (IN id int(11),IN postId int(11) , IN score int (11), IN text TEXT , IN  creationDate DATETIME,
+IN userId int(11))
+BEGIN
+	INSERT INTO comments
+	(`Id`, `PostId`, `Score` ,`Text`, `CreationDate`, `UserId`)
+	VALUES (id, postId, score, text, creationDate, userId);
+	update posts set commentCount = commentCount+1 where Id = postId;
+	CALL denormalizeComments(postID);
+END $$
+DELIMITER ;
+```
 ### Exercise 4
 Make a materialized view that has json objects with questions and its answeres, but no comments. Both the question and each of the answers must have the display name of the user, the text body, and the score.
 
