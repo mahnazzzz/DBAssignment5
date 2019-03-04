@@ -48,7 +48,19 @@ DELIMITER ;
 ```
 
 ### Exercise 2
+
 Create a trigger such that new adding new comments to a post triggers an insertion of that comment in the json array from exercise 1.
+
+```sh
+DELIMITER $$
+CREATE TRIGGER insert_comments
+AFTER INSERT ON comments
+FOR EACH ROW
+BEGIN
+	CALL denormalizeComments(NEW.PostID);
+END $$
+DELIMITER ;
+```
 
 ### Exercise 3
 Rather than using a trigger, create a stored procedure to add a comment to a post - adding it both to the comment table and the json array
