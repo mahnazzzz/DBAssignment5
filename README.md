@@ -42,7 +42,7 @@ BEGIN
 UPDATE posts SET CommentsToJsonArr = (
 	SELECT JSON_ARRAYAGG(jsonComments.jsonObj) from (
 		SELECT JSON_OBJECT('Id', Id,'PostId', PostId,'Score', Score,'Text', Text,'CreationDate', CreationDate,'UserId', UserId) AS jsonObj
-		FROM comments WHERE PostId = postID) AS jsonComments) WHERE ID = postID;
+		FROM comments WHERE PostId = postID) AS jsonComments) WHERE Id = postID;
 END $$
 DELIMITER ;
 ```
@@ -74,12 +74,16 @@ BEGIN
 	(`Id`, `PostId`, `Score` ,`Text`, `CreationDate`, `UserId`)
 	VALUES (id, postId, score, text, creationDate, userId);
 	update posts set commentCount = commentCount+1 where Id = postId;
-	CALL denormalizeComments(postID);
+	CALL denormalizeComments(postId);
 END $$
 DELIMITER ;
 ```
 ### Exercise 4
 Make a materialized view that has json objects with questions and its answeres, but no comments. Both the question and each of the answers must have the display name of the user, the text body, and the score.
 
+It is not done.
+
 ### Exercise 5
 Using the materialized view from exercise 4, create a stored procedure with one parameter `keyword`, which returns all posts where the keyword appears at least once, and where at least two comments mention the keyword as well.
+
+It is not done.
