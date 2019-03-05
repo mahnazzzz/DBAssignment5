@@ -5,6 +5,7 @@ You can find assignments discription [her](https://github.com/datsoftlyngby/soft
 #### Use the docker for connect to mysql workbench and loading the files into a database.
 
 ```sh
+$ docker run --rm --name my_mysql -v ./mysql_databasefiles:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql
 $ winpty docker exec -it my_mysql bash
 ```
 #### For download the data and unzip data
